@@ -6,6 +6,12 @@ var cors = require('cors');
 var request = require('request');
 var twilio = require('twilio');
 
+// Twilio Credentials
+var accountSid = '';
+var authToken = '';
+
+var client = require('twilio')(accountSid, authToken);
+
 var app = express();
 var port = 8080; //add port
 
@@ -14,9 +20,12 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(cors()); //sends headers
 
+
 // app.use(bodyParser.urlencoded)({
 //   extended: true
 // })
+
+
 
 //**end points**
 var message = {
@@ -29,6 +38,15 @@ app.get('/api/message', function(req, res) {
 
 app.post('/api/send_text_message', function(req, res) {
   console.log(req.body.message);
+  // request.post('https://' + accountSid + ':' + authToken +
+  //   '@api.twilio.com/2010-04-01/Accounts')
+  client.messages.create({
+    to: "9095699519",
+    from: "+19093452219",
+    body: req.body.message,
+  }, function(err, message) {
+    console.log(message.sid);
+  });
   res.send();
 });
 
