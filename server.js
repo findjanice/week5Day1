@@ -3,6 +3,8 @@
 var express = require('express'); //
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var request = require('request');
+var twilio = require('twilio');
 
 var app = express();
 var port = 8080; //add port
@@ -25,8 +27,8 @@ app.get('/api/message', function(req, res) {
   return res.json(message);
 });
 
-app.post('/api/receive_message', function(req, res) {
-  console.log(req.body);
+app.post('/api/send_text_message', function(req, res) {
+  console.log(req.body.message);
   res.send();
 });
 
